@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data () {
         return {
@@ -31,6 +32,10 @@ export default {
     methods:  {
         searchMovies () {
             console.log('searchMovies')
+            axios.get(`https://www.omdbapi.com/?apikey=d454eb0&s=${this.title}`)
+                .then(res => {
+                    console.log(res)
+                })
         }
     }
 }
