@@ -36,7 +36,7 @@ export default {
                     console.log(res)
                 })
 
-            console.log('searchMovies')
+            console.log('searchMovies1')
         }
     }
 }
