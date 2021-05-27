@@ -10,7 +10,7 @@
         <template v-slot:append >
             <v-progress-circular
                 v-if="loading"
-                size="24"
+                size="24" 
                 color="primary"
                 indeterminate />
 
@@ -30,13 +30,20 @@ export default {
         }
     },
     methods:  {
-        searchMovies () {
-            axios.get(`https://www.omdbapi.com/?apikey=d454eb0&s=${this.title}`)
-                .then(res => {
-                    console.log(res)
-                })
+        // .then 이용한 비동기
+        // searchMovies () {
+        //     axios.get(`https://www.omdbapi.com/?apikey=d454eb0&s=${this.title}`)
+        //         .then(res => {
+        //             console.log(res)
+        //         })
+        // }
 
-            console.log('searchMovies1')
+        // async await 이용한 비동기
+        async searchMovies () {
+            this.loading = true
+            const res = await axios.get(`https://www.omdbapi.com/?apikey=d454eb0&s=${this.title}`)
+            console.log(res)
+            this.loading = false
         }
     }
 }
