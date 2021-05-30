@@ -1,16 +1,32 @@
+import axios from 'axios'
+
 export default {
+    namespaced: true,
     state: () => ({
         title: '',
-        loading: false
+        loading: false,
+        movies: []
     }),
     getters: {},
-    mutations: {},
+    mutations: {
+        updateState (state, payload) {
+            Object.keys(payload).forEach(key => {
+                state[key] = payload[key]
+            })
+        }
+    },
     actions: {
-        async searchMovies (context) {
-            state.loading = true
-            const res = await axios.get(`https://www.omdbapi.com/?apikey=d454eb0&s=${this.title}`)
+        async searchMovies ({ state, commit }) {
+            // state.loading = true
+            commit('updateState', {
+                loading: true
+            })
+            const res = await axios.get(`https://www.omdbapi.com/?apikey=d454eb0&s=${state.title}`)
             console.log(res)
-            this.loading = false
+            state.movies = res.data.Search
+            commit('updateState', {
+                loading: false
+            })
         }
     }
 }

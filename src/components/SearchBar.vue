@@ -21,12 +21,23 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions } from 'vuex'
+
 export default {
-    data () {
-        return {
-            title: '',
-            loading: false
+    computed: {
+        title : {
+            get () {
+                return this.$store.state.movie.title
+            },
+            set (title) {
+                this.$store.commit('movie/updateState', {
+                    title
+                })
+            }
+            
+        },
+        loading () {
+            return this.$store.state.movie.loading
         }
     },
     methods:  {
@@ -39,12 +50,16 @@ export default {
         // }
 
         // async await 이용한 비동기
-        async searchMovies () {
-            this.loading = true
-            const res = await axios.get(`https://www.omdbapi.com/?apikey=d454eb0&s=${this.title}`)
-            console.log(res)
-            this.loading = false
-        }
+        // async searchMovies () {
+        //     this.loading = true
+        //     const res = await axios.get(`https://www.omdbapi.com/?apikey=d454eb0&s=${this.title}`)
+        //     console.log(res)
+        //     this.loading = false
+        // }
+
+        ...mapActions('movie', [
+            'searchMovies'
+        ])
     }
 }
 </script>
